@@ -105,3 +105,93 @@ CREATE TABLE IF NOT EXISTS StudentsScores (
 	group_id int NOT NULL,
 	subject_id int NOT NULL
 );
+
+ALTER TABLE Users
+	ADD CONSTRAINT usertypes_users_fk
+		FOREIGN KEY (user_type)
+			REFERENCES UserTypes(user_type_id)
+			ON DELETE SET NUll;
+
+ALTER TABLE Directives
+	ADD CONSTRAINT users_directives_fk
+		FOREIGN KEY (user_id)
+			REFERENCES Users(user_id)
+			ON DELETE SET NUll;
+
+ALTER TABLE Teachers
+	ADD CONSTRAINT users_teachers_fk
+		FOREIGN KEY (user_id)
+			REFERENCES Users(user_id)
+			ON DELETE SET NUll;
+
+ALTER TABLE Students
+	ADD CONSTRAINT users_students_fk
+		FOREIGN KEY (user_id)
+			REFERENCES Users(user_id)
+			ON DELETE SET NUll;
+
+ALTER TABLE TeachersSubjects
+	ADD CONSTRAINT teachers_teacherssubjects_fk
+		FOREIGN KEY (teacher_id)
+			REFERENCES Teachers(teacher_id)
+
+	ADD CONSTRAINT subjects_teacherssubjects_fk
+		FOREIGN KEY (subject_id)
+			REFERENCES Subjects(subject_id)
+
+	ADD CONSTRAINT grades_teacherssubjects_fk
+		FOREIGN KEY (grade_id)
+			REFERENCES Grades(grade_id);
+
+ALTER TABLE GroupsSubjects
+	ADD CONSTRAINT groups_groupssubjects_fk
+		FOREIGN KEY (group_id)
+			REFERENCES Groups(group_id)
+
+	ADD CONSTRAINT subjects_groupssubjects_fk
+		FOREIGN KEY (subject_id)
+			REFERENCES Subjects(subject_id)
+
+	ADD CONSTRAINT teachers_groupssubjects_fk
+		FOREIGN KEY (teacher_id)
+			REFERENCES Teachers(teacher_id);
+
+ALTER TABLE StudentsScores
+	ADD CONSTRAINT students_studentsscores_fk
+		FOREIGN KEY (student_id)
+			REFERENCES Students(student_id)
+
+	ADD CONSTRAINT teachers_studentsscores_fk
+		FOREIGN KEY (teacher_id)
+			REFERENCES Teachers(teacher_id)
+
+	ADD CONSTRAINT groups_studentsscores_fk
+		FOREIGN KEY (group_id)
+			REFERENCES Groups(group_id)
+
+	ADD CONSTRAINT subjects_studentsscores_fk
+		FOREIGN KEY (subject_id)
+			REFERENCES Subjects(subject_id);
+
+ALTER TABLE Groups
+	ADD CONSTRAINT teachers_groups_fk
+		FOREIGN KEY (group_leader)
+			REFERENCES Teachers(teacher_id)
+
+	ADD CONSTRAINT grades_groups_fk
+		FOREIGN KEY (grade_id)
+			REFERENCES Grades(grade_id)
+
+ALTER TABLE Grades
+	ADD CONSTRAINT teachers_grades_fk
+		FOREIGN KEY (grade_leader)
+			REFERENCES Teachers(teacher_id);
+
+ALTER TABLE StudentsGroups
+	ADD CONSTRAINT students_studentsgroups_fk
+		FOREIGN KEY (student_id)
+			REFERENCES Students(student_id)
+
+	ADD CONSTRAINT grups_studentsgroups_fk
+		FOREIGN KEY (group_id)
+			REFERENCES Groups(group_id);
