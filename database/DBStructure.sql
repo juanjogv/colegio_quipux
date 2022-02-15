@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Directives (
 );
 
 CREATE TABLE IF NOT EXISTS TeachersSubjects (
+    teacher_subject_id SERIAL PRIMARY KEY,
 	teacher_id int NOT NULL,
 	subject_id int NOT NULL,
 	grade_id int NOT NULL
@@ -70,6 +71,7 @@ CREATE TABLE IF NOT EXISTS Subjects (
 );
 
 CREATE TABLE IF NOT EXISTS GroupsSubjects (
+    group_subject_id SERIAL PRIMARY KEY,
 	group_id int NOT NULL,
 	subject_id int NOT NULL,
 	teacher_id int NOT NULL
@@ -91,6 +93,7 @@ CREATE TABLE IF NOT EXISTS Grades (
 );
 
 CREATE TABLE IF NOT EXISTS StudentsGroups (
+    student_group_id SERIAL PRIMARY KEY,
 	student_id int NOT NULL,
 	group_id int NOT NULL,
 	enrolling_date TIMESTAMP NOT NULL,
