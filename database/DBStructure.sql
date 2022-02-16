@@ -1,6 +1,6 @@
 
 CREATE TYPE YN_ANSWER AS ENUM ('Y', 'N');
-CREATE TYPE GENDER AS ENUM ('Male', 'Female', 'Other');
+CREATE TYPE GENDER AS ENUM ('M', 'F', 'O');
 
 CREATE TABLE IF NOT EXISTS Users (
     user_id SERIAL PRIMARY KEY,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Students (
     student_id SERIAL PRIMARY KEY,
     student_key varchar(100) UNIQUE NOT NULL,
     student_name varchar(100) NOT NULL,
-    studen_lastname varchar(100) NOT NUll,
+    student_lastname varchar(100) NOT NUll,
     student_birth_date date NOT NULL,
     student_gender GENDER NOT NULL,
     student_contact_numer varchar(100) NOT NUll,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Teachers (
     teacher_id SERIAL PRIMARY KEY,
     teacher_key varchar(100) UNIQUE NOT NULL,
     teacher_name varchar(100) NOT NULL,
-    studen_lastname varchar(100) NOT NUll,
+    teacher_lastname varchar(100) NOT NUll,
     teacher_birth_date date NOT NULL,
     teacher_gender GENDER NOT NULL,
     teacher_contact_numer varchar(100) NOT NUll,
