@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "grades")
-public class Grade {
+public class GradeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grade_id", nullable = false)
@@ -15,7 +15,7 @@ public class Grade {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "grade_leader", nullable = false)
-    private Teacher gradeLeader;
+    private TeacherEntity gradeLeader;
 
     @Column(name = "is_active", nullable = false)
     private String isActive;
@@ -28,11 +28,11 @@ public class Grade {
         this.isActive = isActive;
     }
 
-    public Teacher getGradeLeader() {
+    public TeacherEntity getGradeLeader() {
         return gradeLeader;
     }
 
-    public void setGradeLeader(Teacher gradeLeader) {
+    public void setGradeLeader(TeacherEntity gradeLeader) {
         this.gradeLeader = gradeLeader;
     }
 
