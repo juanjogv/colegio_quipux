@@ -5,7 +5,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "studentsgroups")
-public class Studentsgroup {
+public class StudentGroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_group_id", nullable = false)
@@ -13,11 +13,11 @@ public class Studentsgroup {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    private StudentEntity student;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
+    private GroupEntity group;
 
     @Column(name = "enrolling_date", nullable = false)
     private Instant enrollingDate;
@@ -41,19 +41,19 @@ public class Studentsgroup {
         this.enrollingDate = enrollingDate;
     }
 
-    public Group getGroup() {
+    public GroupEntity getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(GroupEntity group) {
         this.group = group;
     }
 
-    public Student getStudent() {
+    public StudentEntity getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(StudentEntity student) {
         this.student = student;
     }
 

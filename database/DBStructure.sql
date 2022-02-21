@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Users (
     user_email varchar(100) UNIQUE NOT NULL,
     user_password varchar(200) NOT NULL,
     user_type int NOT NULL,
-    register_date TIMESTAMP NOT NULL,
+    register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_active YN_ANSWER NOT NULL DEFAULT 'Y'
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Students (
     student_gender GENDER NOT NULL,
     student_contact_numer varchar(100) NOT NUll,
     user_id int,
-    register_date TIMESTAMP NOT NULL,
+    register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_active YN_ANSWER NOT NULL DEFAULT 'Y'
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Teachers (
     teacher_gender GENDER NOT NULL,
     teacher_contact_numer varchar(100) NOT NUll,
     user_id int,
-    register_date TIMESTAMP NOT NULL,
+    register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_active YN_ANSWER NOT NULL DEFAULT 'Y'
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS Directives (
     directive_gender GENDER NOT NULL,
     directive_contact_numer varchar(100) NOT NUll,
     user_id int,
-    register_date TIMESTAMP NOT NULL,
+    register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_active YN_ANSWER NOT NULL DEFAULT 'Y'
 );
 

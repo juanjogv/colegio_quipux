@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "groups")
-public class Group {
+public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id", nullable = false)
@@ -15,11 +15,11 @@ public class Group {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "group_leader", nullable = false)
-    private Teacher groupLeader;
+    private TeacherEntity groupLeader;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "grade_id", nullable = false)
-    private Grade grade;
+    private GradeEntity grade;
 
     @Column(name = "is_active", nullable = false)
     private String isActive;
@@ -32,19 +32,19 @@ public class Group {
         this.isActive = isActive;
     }
 
-    public Grade getGrade() {
+    public GradeEntity getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(GradeEntity grade) {
         this.grade = grade;
     }
 
-    public Teacher getGroupLeader() {
+    public TeacherEntity getGroupLeader() {
         return groupLeader;
     }
 
-    public void setGroupLeader(Teacher groupLeader) {
+    public void setGroupLeader(TeacherEntity groupLeader) {
         this.groupLeader = groupLeader;
     }
 

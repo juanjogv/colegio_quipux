@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "directives")
-public class Directive {
+public class DirectiveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "directive_id", nullable = false)
@@ -32,10 +32,21 @@ public class Directive {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @Column(name = "register_date", nullable = false)
     private Instant registerDate;
+
+    @Column(name = "is_active", nullable = false)
+    private String isActive;
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
 
     public Instant getRegisterDate() {
         return registerDate;
@@ -45,11 +56,11 @@ public class Directive {
         this.registerDate = registerDate;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
