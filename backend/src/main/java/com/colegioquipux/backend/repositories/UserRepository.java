@@ -1,7 +1,15 @@
 package com.colegioquipux.backend.repositories;
 
 import com.colegioquipux.backend.models.entity.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+	
+	Optional<UserEntity> findByUserNickname(String userNickname);
+	
 }

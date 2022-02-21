@@ -20,8 +20,8 @@ public class UserEntity {
     @Column(name = "user_password", nullable = false, length = 200)
     private String userPassword;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_type", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_type", referencedColumnName = "user_type_id")
     private UsertypeEntity userType;
 
     @Column(name = "register_date", nullable = false)
@@ -46,15 +46,15 @@ public class UserEntity {
         this.registerDate = registerDate;
     }
 
-    public UsertypeEntity getUserType() {
-        return userType;
-    }
+	public UsertypeEntity getUserType() {
+		return userType;
+	}
 
-    public void setUserType(UsertypeEntity userType) {
-        this.userType = userType;
-    }
+	public void setUserType(UsertypeEntity userType) {
+		this.userType = userType;
+	}
 
-    public String getUserPassword() {
+	public String getUserPassword() {
         return userPassword;
     }
 
