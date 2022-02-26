@@ -5,7 +5,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "users")
-public class UsersEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
@@ -20,9 +20,9 @@ public class UsersEntity {
     @Column(name = "user_password", nullable = false, length = 200)
     private String userPassword;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_type", nullable = false)
-    private Usertype userType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_type", referencedColumnName = "user_type_id")
+    private UsertypeEntity userType;
 
     @Column(name = "register_date", nullable = false)
     private Instant registerDate;
@@ -46,15 +46,15 @@ public class UsersEntity {
         this.registerDate = registerDate;
     }
 
-    public Usertype getUserType() {
-        return userType;
-    }
+	public UsertypeEntity getUserType() {
+		return userType;
+	}
 
-    public void setUserType(Usertype userType) {
-        this.userType = userType;
-    }
+	public void setUserType(UsertypeEntity userType) {
+		this.userType = userType;
+	}
 
-    public String getUserPassword() {
+	public String getUserPassword() {
         return userPassword;
     }
 

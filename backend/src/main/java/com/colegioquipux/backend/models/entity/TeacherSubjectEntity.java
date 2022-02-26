@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "teacherssubjects")
-public class Teacherssubject {
+public class TeacherSubjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_subject_id", nullable = false)
@@ -12,37 +12,37 @@ public class Teacherssubject {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
+    private TeacherEntity teacher;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    private SubjectEntity subject;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "grade_id", nullable = false)
-    private Grade grade;
+    private GradeEntity grade;
 
-    public Grade getGrade() {
+    public GradeEntity getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(GradeEntity grade) {
         this.grade = grade;
     }
 
-    public Subject getSubject() {
+    public SubjectEntity getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void setSubject(SubjectEntity subject) {
         this.subject = subject;
     }
 
-    public Teacher getTeacher() {
+    public TeacherEntity getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(TeacherEntity teacher) {
         this.teacher = teacher;
     }
 
