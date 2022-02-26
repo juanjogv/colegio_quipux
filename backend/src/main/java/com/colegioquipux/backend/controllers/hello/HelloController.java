@@ -13,17 +13,17 @@ import com.colegioquipux.backend.services.hello.HelloService;
 @RestController
 @RequestMapping("/hello")
 public class HelloController {
-	
+
 	@Autowired
 	HelloService helloService;
-	
+
 	@GetMapping
-	public ResponseEntity<String> sayHello(){
+	public ResponseEntity<String> sayHello() {
 		return ResponseEntity.status(HttpStatus.OK).body(helloService.sayHelloWorld());
 	}
-	
+
 	@GetMapping("/{name}")
-	public ResponseEntity<String> sayHelloPerson(@PathVariable String name){
+	public ResponseEntity<String> sayHelloPerson(@PathVariable String name) {
 		return ResponseEntity.status(HttpStatus.OK).body(helloService.sayHelloPerson(name));
 	}
 }

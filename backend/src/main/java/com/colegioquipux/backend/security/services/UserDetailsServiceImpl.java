@@ -11,9 +11,10 @@ import com.colegioquipux.backend.models.entity.UserEntity;
 import com.colegioquipux.backend.repositories.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String userNickname) throws UsernameNotFoundException {

@@ -8,13 +8,13 @@ import com.colegioquipux.backend.services.hello.HelloService;
 public class HelloServiceImpl implements HelloService {
 
 	@Override
-	public String sayHelloWorld() {
-		return "Hello World!";
+	public String sayHelloPerson(String name) {
+		return "Hello " + name + "!";
 	}
 
 	@Override
-	public String sayHelloPerson(String name) {
-		return "Hello " + name + "!";
+	public String sayHelloWorld() {
+		return "Hello World!";
 	}
 
 }

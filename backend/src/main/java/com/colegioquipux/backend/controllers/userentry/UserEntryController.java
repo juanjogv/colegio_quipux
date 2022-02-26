@@ -1,4 +1,4 @@
-package com.colegioquipux.backend.controllers.auth;
+package com.colegioquipux.backend.controllers.userentry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,19 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colegioquipux.backend.models.dto.SignInDTO;
-import com.colegioquipux.backend.services.user.UserService;
+import com.colegioquipux.backend.models.dto.SignUpDTO;
+import com.colegioquipux.backend.services.userentry.UserEntryService;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api/auth")
-public class AuthController {
+public class UserEntryController {
 
 	@Autowired
-	private UserService userService;
+	private UserEntryService userService;
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> read(@RequestBody SignInDTO signInDto) {	
-		return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(signInDto));
+	public ResponseEntity<?> signIn(@RequestBody SignInDTO signInDTO) {
+		return userService.signIn(signInDTO);
 	}
 
+	@PostMapping("/signup")
+	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO) throws Exception {
+		return userService.signUp(signUpDTO);
+	}
 }
