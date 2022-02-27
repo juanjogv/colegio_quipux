@@ -13,7 +13,7 @@ input[type=text], input[type=password] {
 .boton{    
   background-color: #262236;
   color: white;
-  font-size: 16px;
+  font-size: var(--font-size--button);
   padding: 15px 25px;
   margin: 8px 0;
   border: 0;
@@ -23,7 +23,10 @@ input[type=text], input[type=password] {
 }
 
 
-button:hover {
+.boton:hover {
+  background-color: #262236;
+  border: 0;
+  border-bottom: 3px solid #E2E63F;
   opacity: 0.8;
 }
 

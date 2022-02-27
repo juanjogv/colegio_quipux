@@ -14,7 +14,8 @@ const Login = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-xl-6 col-lg-6 col-md-12"></div>
+        <div className="col-xl-6 col-lg-6 col-md-12">
+        </div>
         <div className="col-xl-6 col-lg-6 col-md-12">
           <form>
             <div class="mb-3">
