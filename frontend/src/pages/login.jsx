@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-//import '../style/login.css';
+import '../style/login.css';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,25 +14,16 @@ const Login = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col"></div>
-        <div className="col">
+        <div className="col-xl-6 col-lg-6 col-md-12"></div>
+        <div className="col-xl-6 col-lg-6 col-md-12">
           <form>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">
-                Email address
-              </label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-              <div id="emailHelp" class="form-text">
-                We'll never share your email with anyone else.
-              </div>
+              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="User" aria-describedby="emailHelp" />
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">
-                Password
-              </label>
-              <input type="password" class="form-control" id="exampleInputPassword1" />
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary boton">
               Submit
             </button>
           </form>
