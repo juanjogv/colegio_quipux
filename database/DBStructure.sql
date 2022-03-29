@@ -1,201 +1,280 @@
+CREATE TABLE IF NOT EXISTS user_types (
+    user_type_id SERIAL PRIMARY KEY,
+    user_type_name varchar (50) UNIQUE NOT NULL,
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
+);
 
-CREATE TYPE YN_ANSWER AS ENUM ('Y', 'N');
-CREATE TYPE GENDER AS ENUM ('M', 'F', 'O');
-
-CREATE TABLE IF NOT EXISTS Users (
+CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
-    user_nickname varchar(100) UNIQUE NOT NULL,
+    user_username varchar(100) UNIQUE NOT NULL,
     user_email varchar(100) UNIQUE NOT NULL,
     user_password varchar(200) NOT NULL,
     user_type int NOT NULL,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS UserTypes (
-    user_type_id SERIAL PRIMARY KEY,
-    user_type_name varchar (50) UNIQUE NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+CREATE TABLE IF NOT EXISTS gender_types (
+	gender_type_id SERIAL PRIMARY KEY,
+	gender_type_name varchar(100),
+	is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Students (
+CREATE TABLE IF NOT EXISTS students (
     student_id SERIAL PRIMARY KEY,
     student_key varchar(100) UNIQUE NOT NULL,
     student_name varchar(100) NOT NULL,
     student_lastname varchar(100) NOT NUll,
     student_birth_date date NOT NULL,
-    student_gender GENDER NOT NULL,
+    student_gender int NOT NULL,
     student_contact_numer varchar(100) NOT NUll,
     user_id int,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Teachers (
+CREATE TABLE IF NOT EXISTS teachers (
     teacher_id SERIAL PRIMARY KEY,
     teacher_key varchar(100) UNIQUE NOT NULL,
     teacher_name varchar(100) NOT NULL,
     teacher_lastname varchar(100) NOT NUll,
     teacher_birth_date date NOT NULL,
-    teacher_gender GENDER NOT NULL,
+    teacher_gender int NOT NULL,
     teacher_contact_numer varchar(100) NOT NUll,
     user_id int,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Directives (
+CREATE TABLE IF NOT EXISTS directives (
     directive_id SERIAL PRIMARY KEY,
     directive_key varchar(100) UNIQUE NOT NULL,
     directive_name varchar(100) NOT NULL,
     directive_lastname varchar(100) NOT NUll,
     directive_birth_date date NOT NULL,
-    directive_gender GENDER NOT NULL,
+    directive_gender int NOT NULL,
     directive_contact_numer varchar(100) NOT NUll,
     user_id int,
     register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS TeachersSubjects (
+CREATE TABLE IF NOT EXISTS teachers_subjects (
     teacher_subject_id SERIAL PRIMARY KEY,
     teacher_id int NOT NULL,
     subject_id int NOT NULL,
     grade_id int NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Subjects (
+CREATE TABLE IF NOT EXISTS subjects (
     subject_id SERIAL PRIMARY KEY,
     subject_name varchar(100) NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS GroupsSubjects (
+CREATE TABLE IF NOT EXISTS groups_subjects (
     group_subject_id SERIAL PRIMARY KEY,
     group_id int NOT NULL,
     subject_id int NOT NULL,
     teacher_id int NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Groups (
+CREATE TABLE IF NOT EXISTS groups (
     group_id SERIAL PRIMARY KEY,
     group_name varchar(100) NOT NUll,
     group_leader int NOT NULL,
     grade_id int NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Grades (
+CREATE TABLE IF NOT EXISTS grades (
     grade_id SERIAL PRIMARY KEY,
     grade_name varchar(100) NOT NUll,
     grade_leader int NOT NULL,
-    is_active YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS StudentsGroups (
+CREATE TABLE IF NOT EXISTS students_groups (
     student_group_id SERIAL PRIMARY KEY,
     student_id int NOT NULL,
     group_id int NOT NULL,
     enrolling_date TIMESTAMP NOT NULL,
-    is_current_group YN_ANSWER NOT NULL DEFAULT 'Y'
+    is_active varchar(10) DEFAULT 'Y' NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS StudentsScores (
+CREATE TABLE IF NOT EXISTS students_scores (
     student_score_id SERIAL PRIMARY KEY,
-    score int NOT NULL,
+    score int NOT NULL, 
     student_id int NOT NULL,
     teacher_id int NOT NULL,
     group_id int NOT NULL,
     subject_id int NOT NULL
 );
 
-ALTER TABLE Users
-    ADD CONSTRAINT usertypes_users_fk
-        FOREIGN KEY (user_type)
-            REFERENCES UserTypes(user_type_id)
-            ON DELETE SET NUll;
+ALTER TABLE user_types
+	ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
 
-ALTER TABLE Students
+ALTER TABLE users
+    ADD CONSTRAINT user_types_users_fk
+        FOREIGN KEY (user_type)
+            REFERENCES user_types(user_type_id)
+            ON DELETE SET NUll,
+
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ ALTER TABLE gender_types
+	ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE students
     ADD CONSTRAINT users_students_fk
         FOREIGN KEY (user_id)
-            REFERENCES Users(user_id)
-            ON DELETE SET NUll;
+            REFERENCES users(user_id)
+            ON DELETE SET NUll,
 
-ALTER TABLE Teachers
+    ADD CONSTRAINT gender_types_students_fk
+        FOREIGN KEY (student_gender)
+            REFERENCES gender_types(gender_type_id)
+            ON DELETE SET NUll,
+
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE teachers
     ADD CONSTRAINT users_teachers_fk
         FOREIGN KEY (user_id)
-            REFERENCES Users(user_id)
-            ON DELETE SET NUll;
+            REFERENCES users(user_id)
+            ON DELETE SET NUll,
 
-ALTER TABLE Directives
+    ADD CONSTRAINT gender_types_teachers_fk
+        FOREIGN KEY (teacher_gender)
+            REFERENCES gender_types(gender_type_id)
+            ON DELETE SET NUll,
+
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE directives
     ADD CONSTRAINT users_directives_fk
         FOREIGN KEY (user_id)
-            REFERENCES Users(user_id)
-            ON DELETE SET NUll;
+            REFERENCES users(user_id)
+            ON DELETE SET NUll,
 
+    ADD CONSTRAINT gender_types_directives_fk
+        FOREIGN KEY (directive_gender)
+            REFERENCES gender_types(gender_type_id)
+            ON DELETE SET NUll,
 
-ALTER TABLE TeachersSubjects
-    ADD CONSTRAINT teachers_teacherssubjects_fk
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE teachers_subjects
+    ADD CONSTRAINT teachers_teachers_subjects_fk
         FOREIGN KEY (teacher_id)
-            REFERENCES Teachers(teacher_id),
+            REFERENCES teachers(teacher_id),
 
-    ADD CONSTRAINT subjects_teacherssubjects_fk
+    ADD CONSTRAINT subjects_teachers_subjects_fk
         FOREIGN KEY (subject_id)
-            REFERENCES Subjects(subject_id),
+            REFERENCES subjects(subject_id),
 
-    ADD CONSTRAINT grades_teacherssubjects_fk
+    ADD CONSTRAINT grades_teachers_subjects_fk
         FOREIGN KEY (grade_id)
-            REFERENCES Grades(grade_id);
+            REFERENCES grades(grade_id);
 
-ALTER TABLE GroupsSubjects
-    ADD CONSTRAINT groups_groupssubjects_fk
+ALTER TABLE subjects
+	ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE groups_subjects
+    ADD CONSTRAINT groups_groups_subjects_fk
         FOREIGN KEY (group_id)
-            REFERENCES Groups(group_id),
+            REFERENCES groups(group_id),
 
-    ADD CONSTRAINT subjects_groupssubjects_fk
+    ADD CONSTRAINT subjects_groups_subjects_fk
         FOREIGN KEY (subject_id)
-            REFERENCES Subjects(subject_id),
+            REFERENCES subjects(subject_id),
 
-    ADD CONSTRAINT teachers_groupssubjects_fk
+    ADD CONSTRAINT teachers_groups_subjects_fk
         FOREIGN KEY (teacher_id)
-            REFERENCES Teachers(teacher_id);
+            REFERENCES teachers(teacher_id);
 
-ALTER TABLE Groups
+ALTER TABLE groups
     ADD CONSTRAINT teachers_groups_fk
         FOREIGN KEY (group_leader)
-            REFERENCES Teachers(teacher_id),
+            REFERENCES teachers(teacher_id),
 
     ADD CONSTRAINT grades_groups_fk
         FOREIGN KEY (grade_id)
-            REFERENCES Grades(grade_id);
+            REFERENCES grades(grade_id),
 
-ALTER TABLE Grades
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE grades
     ADD CONSTRAINT teachers_grades_fk
         FOREIGN KEY (grade_leader)
-            REFERENCES Teachers(teacher_id);
+            REFERENCES teachers(teacher_id),
 
-ALTER TABLE StudentsGroups
-    ADD CONSTRAINT students_studentsgroups_fk
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE students_groups
+    ADD CONSTRAINT students_students_groups_fk
         FOREIGN KEY (student_id)
-            REFERENCES Students(student_id),
+            REFERENCES students(student_id),
 
-    ADD CONSTRAINT grups_studentsgroups_fk
+    ADD CONSTRAINT grups_students_groups_fk
         FOREIGN KEY (group_id)
-            REFERENCES Groups(group_id);
+            REFERENCES groups(group_id),
 
-ALTER TABLE StudentsScores
-    ADD CONSTRAINT students_studentsscores_fk
+    ADD CONSTRAINT is_active_check
+    	CHECK(
+    			is_active = 'Y'
+    			OR is_active = 'N'
+    		);
+
+ALTER TABLE students_scores
+    ADD CONSTRAINT students_students_scores_fk
         FOREIGN KEY (student_id)
-            REFERENCES Students(student_id),
+            REFERENCES students(student_id),
 
-    ADD CONSTRAINT teachers_studentsscores_fk
+    ADD CONSTRAINT teachers_students_scores_fk
         FOREIGN KEY (teacher_id)
-            REFERENCES Teachers(teacher_id),
+            REFERENCES teachers(teacher_id),
 
-    ADD CONSTRAINT groups_studentsscores_fk
+    ADD CONSTRAINT groups_students_scores_fk
         FOREIGN KEY (group_id)
-            REFERENCES Groups(group_id),
+            REFERENCES groups(group_id),
 
-    ADD CONSTRAINT subjects_studentsscores_fk
+    ADD CONSTRAINT subjects_students_scores_fk
         FOREIGN KEY (subject_id)
-            REFERENCES Subjects(subject_id);
+            REFERENCES subjects(subject_id);

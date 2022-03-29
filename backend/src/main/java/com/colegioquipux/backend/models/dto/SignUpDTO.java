@@ -1,14 +1,16 @@
 package com.colegioquipux.backend.models.dto;
 
-import com.colegioquipux.backend.models.entity.UsertypeEntity;
+
+import com.colegioquipux.backend.models.entity.UserTypeEntity;
 
 import lombok.Data;
+
 
 @Data
 public class SignUpDTO {
 
-	private String userEmail;
-	private String userNickname;
-	private String userPassword;
-	private UsertypeEntity userType;
+	private String username;
+	private String email;
+	private String password;
+	private UserTypeEntity userType;
 }

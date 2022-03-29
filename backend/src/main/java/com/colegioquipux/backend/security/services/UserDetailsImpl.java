@@ -17,7 +17,7 @@ public class UserDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(user.getUserType().getUserTypeName()));
 
-		return new UserDetailsImpl(user.getId().longValue(), user.getUserNickname(), user.getUserEmail(),
+		return new UserDetailsImpl(user.getId().longValue(), user.getUserUsername(), user.getUserEmail(),
 				user.getUserPassword(), authorities);
 	}
 	private Collection<? extends GrantedAuthority> authorities;

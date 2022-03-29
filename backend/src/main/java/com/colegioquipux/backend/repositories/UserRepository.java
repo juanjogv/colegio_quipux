@@ -10,9 +10,9 @@ import com.colegioquipux.backend.models.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-	Optional<UserEntity> findByUserNickname(String userNickname);
+	Optional<UserEntity> findByUsername(String username);
 
-	Boolean existsByUserNickname(String userNickname);
+	Boolean existsByUsername(String username);
 
 	Boolean existsByUserEmail(String userEmail);
 
