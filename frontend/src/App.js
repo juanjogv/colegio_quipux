@@ -1,18 +1,24 @@
-import Login from './pages/login';
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from 'react-router-dom';
-
+import * as React from "react";
+import Login from "./pages/login";
+import Home from "./pages/home";
+import { AuthProvider, RequireAuth } from "./components/auth/authProvider";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
+    <AuthProvider>
       <Routes>
-        <Route path="/" element={<Login/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/home"
+          element={
+            <RequireAuth>
+              <Home />
+            </RequireAuth>
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </AuthProvider>
   );
 }
 

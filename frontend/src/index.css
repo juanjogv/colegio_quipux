@@ -2,9 +2,16 @@
   font-size: 62.5%;
 }
 
-*{
+* {
   --diff: calc(var(--max-size) - var(--min-size));
-  --responsive: calc((var(--min-size) * 1px) + var(--diff) * ((100vw - 420px) / (1200 - 420))); /* Ranges from 421px to 1199px */
+  --responsive: calc((var(--min-size) * 0.1rem) + var(--diff) * ((100vw - 42rem) / (1200 - 420))); /* Ranges from 421px to 1199px */
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 h1 {
@@ -25,20 +32,8 @@ h3 {
   font-size: var(--responsive);
 }
 
-button{
+button {
   --max-size: 40;
   --min-size: 20;
   font-size: var(--responsive);
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

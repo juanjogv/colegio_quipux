@@ -1,31 +1,65 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../components/auth/authProvider";
 
-import '../style/login.css';
+import "./style/login.css";
+
+function useAuth() {
+  return useContext(AuthContext);
+}
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({ username: "", password: "" });
+
+  let navigate = useNavigate();
+  let location = useLocation();
+  let auth = useAuth();
+
+  let from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Hola mundo");
+    auth.login(user, () => {
+      // Send them back to the page they tried to visit when they were
+      // redirected to the login page. Use { replace: true } so we don't create
+      // another entry in the history stack for the login page.  This means that
+      // when they get to the protected page and click the back button, they
+      // won't end up back on the login page, which is also really nice for the
+      // user experience.
+      navigate(from, { replace: true });
+    });
   };
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-xl-6 col-lg-6 col-md-12">
-        </div>
-        <div className="col-xl-6 col-lg-6 col-md-12">
-          <form>
-            <div class="mb-3">
-              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="User" aria-describedby="emailHelp" />
+      <div className="row align-items-center p-5 vh-100">
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12"></div>
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <input
+                name="username"
+                type="text"
+                className="form-control"
+                id="InputEmail"
+                placeholder="Usuario"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+              />
             </div>
-            <div class="mb-3">
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+            <div className="mb-3">
+              <input
+                mame="password"
+                type="password"
+                className="form-control"
+                id="InputPassword"
+                placeholder="Contraseña"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+              />
             </div>
             <button type="submit" className="btn btn-primary boton">
-              Submit
+              Iniciar sesión
             </button>
           </form>
         </div>

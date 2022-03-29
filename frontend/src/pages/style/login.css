@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f7f7;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px 25px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 0px;
+  border-bottom: 1px solid #262236;
+  box-sizing: border-box;
+}
+
+.boton {
+  background-color: #262236;
+  color: white;
+  font-size: var(--font-size--button);
+  padding: 15px 25px;
+  margin: 8px 0;
+  border: 0;
+  border-bottom: 3px solid #e2e63f;
+  cursor: pointer;
+  width: 100%;
+}
+
+.boton:hover {
+  background-color: #262236;
+  border: 0;
+  border-bottom: 3px solid #e2e63f;
+  opacity: 0.8;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
