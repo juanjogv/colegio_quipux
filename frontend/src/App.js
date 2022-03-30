@@ -1,16 +1,23 @@
 import * as React from "react";
-import Login from "./pages/login";
+import Signin from "./pages/signin";
 import Home from "./pages/home";
-import { AuthProvider, RequireAuth } from "./components/auth/authProvider";
+import { AuthProvider, AuthChecker, RequireAuth } from "./components/auth/authProvider";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route
-          path="/home"
+          path="/signin"
+          element={
+            <AuthChecker>
+              <Signin />
+            </AuthChecker>
+          }
+        />
+        <Route
+          path="/"
           element={
             <RequireAuth>
               <Home />

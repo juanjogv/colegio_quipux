@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
-
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -10,7 +9,7 @@ const AuthProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const user = cookies.userData;
 
-  let login = (user, callback) => {
+  let signin = (user, callback) => {
     axios
       .post("/api/auth/signin", user)
       .then((res) => {
@@ -22,12 +21,12 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  let logout = (callback) => {
+  let signout = (callback) => {
     removeCookie("userData");
     callback();
   };
 
-  let value = { user, login, logout };
+  let value = { user, signin, signout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
@@ -36,16 +35,23 @@ const useAuth = () => {
   return useContext(AuthContext);
 };
 
+const AuthChecker = ({ children }) => {
+  let auth = useAuth();
+  let location = useLocation();
+
+  if (auth.user) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
+
 const RequireAuth = ({ children }) => {
   let auth = useAuth();
   let location = useLocation();
 
   if (!auth.user) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
   return children;
@@ -64,7 +70,7 @@ const AuthStatus = () => {
       Welcome {auth.user}!{" "}
       <button
         onClick={() => {
-          auth.logout(() => navigate("/"));
+          auth.signout(() => navigate("/"));
         }}
       >
         Sign out
@@ -73,4 +79,4 @@ const AuthStatus = () => {
   );
 };
 
-export { AuthProvider, AuthContext, RequireAuth, AuthStatus };
+export { AuthContext, AuthProvider, AuthChecker, RequireAuth, AuthStatus };

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../components/auth/authProvider";
 
 const useAuth = () => {
@@ -11,14 +12,16 @@ const Home = () => {
   let navigate = useNavigate();
   return (
     <div>
-      Home
-      <button
-        onClick={() => {
-          auth.logout(() => navigate("/"));
-        }}
-      >
-        Sign out
-      </button>
+      <h1>Home</h1>
+      <div>
+        <button
+          onClick={() => {
+            auth.signout(() => navigate("/"));
+          }}
+        >
+          Sign out
+        </button>
+      </div>
     </div>
   );
 };

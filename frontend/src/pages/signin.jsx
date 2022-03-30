@@ -1,14 +1,15 @@
 import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import { AuthContext } from "../components/auth/authProvider";
 
-import "./style/login.css";
+import "./style/signin.css";
 
 function useAuth() {
   return useContext(AuthContext);
 }
 
-const Login = () => {
+const Signin = () => {
   const [user, setUser] = useState({ username: "", password: "" });
 
   let navigate = useNavigate();
@@ -19,13 +20,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    auth.login(user, () => {
-      // Send them back to the page they tried to visit when they were
-      // redirected to the login page. Use { replace: true } so we don't create
-      // another entry in the history stack for the login page.  This means that
-      // when they get to the protected page and click the back button, they
-      // won't end up back on the login page, which is also really nice for the
-      // user experience.
+    auth.signin(user, () => {
       navigate(from, { replace: true });
     });
   };
@@ -68,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

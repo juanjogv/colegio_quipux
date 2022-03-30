@@ -31,9 +31,3 @@ h3 {
   --min-size: 15;
   font-size: var(--responsive);
 }
-
-button {
-  --max-size: 40;
-  --min-size: 20;
-  font-size: var(--responsive);
-}
