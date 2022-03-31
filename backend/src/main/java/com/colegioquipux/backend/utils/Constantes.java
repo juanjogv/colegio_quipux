@@ -1,13 +1,23 @@
 package com.colegioquipux.backend.utils;
 
 public class Constantes {
-	private Constantes() {}
-	
-	public static final class FormatoFechas{
-		
-		public static final String DDMMAAAA = "ddMMyyyy";
+	public static final class FormatoFechas {
+
 		public static final String AAAAMMDD = "yyyyMMdd";
-		
-		private FormatoFechas() {}
+		public static final String DDMMAAAA = "ddMMyyyy";
+
+		private FormatoFechas() {
+		}
+	}
+
+	public static final class YNAnswer {
+		public static final String N = "Y";
+		public static final String Y = "Y";
+
+		private YNAnswer() {
+		}
+	}
+
+	private Constantes() {
 	}
 }

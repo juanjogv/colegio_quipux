@@ -1,130 +1,123 @@
 package com.colegioquipux.backend.models.entity;
 
+import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "directives")
 public class DirectiveEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "directive_id", nullable = false)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "directive_id", nullable = false)
+    private Integer id;
 
-	@Column(name = "directive_key", nullable = false, length = 100)
-	private String directiveKey;
+    @Column(name = "directive_key", nullable = false, length = 100)
+    private String directiveKey;
 
-	@Column(name = "directive_name", nullable = false, length = 100)
-	private String directiveName;
+    @Column(name = "directive_name", nullable = false, length = 100)
+    private String directiveName;
 
-	@Column(name = "directive_lastname", nullable = false, length = 100)
-	private String directiveLastname;
+    @Column(name = "directive_lastname", nullable = false, length = 100)
+    private String directiveLastname;
 
-	@Column(name = "directive_birth_date", nullable = false)
-	private LocalDate directiveBirthDate;
+    @Column(name = "directive_birth_date", nullable = false)
+    private LocalDate directiveBirthDate;
 
-	@Column(name = "directive_gender", nullable = false)
-	private String directiveGender;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "directive_gender", nullable = false)
+    private GenderTypeEntity directiveGender;
 
-	@Column(name = "directive_contact_numer", nullable = false, length = 100)
-	private String directiveContactNumer;
+    @Column(name = "directive_contact_numer", nullable = false, length = 100)
+    private String directiveContactNumer;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-	@Column(name = "register_date", nullable = false)
-	private Instant registerDate;
+    @Column(name = "register_date", nullable = false)
+    private Instant registerDate;
 
-	@Column(name = "is_active", nullable = false)
-	private String isActive;
+    @Column(name = "is_active", nullable = false, length = 10)
+    private String isActive;
 
-	public String getIsActive() {
-		return isActive;
-	}
+    public String getIsActive() {
+        return isActive;
+    }
 
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
-	}
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
 
-	public Instant getRegisterDate() {
-		return registerDate;
-	}
+    public Instant getRegisterDate() {
+        return registerDate;
+    }
 
-	public void setRegisterDate(Instant registerDate) {
-		this.registerDate = registerDate;
-	}
+    public void setRegisterDate(Instant registerDate) {
+        this.registerDate = registerDate;
+    }
 
-	public UserEntity getUser() {
-		return user;
-	}
+    public UserEntity getUser() {
+        return user;
+    }
 
-	public void setUser(UserEntity user) {
-		this.user = user;
-	}
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
-	public String getDirectiveContactNumer() {
-		return directiveContactNumer;
-	}
+    public String getDirectiveContactNumer() {
+        return directiveContactNumer;
+    }
 
-	public void setDirectiveContactNumer(String directiveContactNumer) {
-		this.directiveContactNumer = directiveContactNumer;
-	}
+    public void setDirectiveContactNumer(String directiveContactNumer) {
+        this.directiveContactNumer = directiveContactNumer;
+    }
 
-	public String getDirectiveGender() {
-		return directiveGender;
-	}
+    public GenderTypeEntity getDirectiveGender() {
+        return directiveGender;
+    }
 
-	public void setDirectiveGender(String directiveGender) {
-		this.directiveGender = directiveGender;
-	}
+    public void setDirectiveGender(GenderTypeEntity directiveGender) {
+        this.directiveGender = directiveGender;
+    }
 
-	public LocalDate getDirectiveBirthDate() {
-		return directiveBirthDate;
-	}
+    public LocalDate getDirectiveBirthDate() {
+        return directiveBirthDate;
+    }
 
-	public void setDirectiveBirthDate(LocalDate directiveBirthDate) {
-		this.directiveBirthDate = directiveBirthDate;
-	}
+    public void setDirectiveBirthDate(LocalDate directiveBirthDate) {
+        this.directiveBirthDate = directiveBirthDate;
+    }
 
-	public String getDirectiveLastname() {
-		return directiveLastname;
-	}
+    public String getDirectiveLastname() {
+        return directiveLastname;
+    }
 
-	public void setDirectiveLastname(String directiveLastname) {
-		this.directiveLastname = directiveLastname;
-	}
+    public void setDirectiveLastname(String directiveLastname) {
+        this.directiveLastname = directiveLastname;
+    }
 
-	public String getDirectiveName() {
-		return directiveName;
-	}
+    public String getDirectiveName() {
+        return directiveName;
+    }
 
-	public void setDirectiveName(String directiveName) {
-		this.directiveName = directiveName;
-	}
+    public void setDirectiveName(String directiveName) {
+        this.directiveName = directiveName;
+    }
 
-	public String getDirectiveKey() {
-		return directiveKey;
-	}
+    public String getDirectiveKey() {
+        return directiveKey;
+    }
 
-	public void setDirectiveKey(String directiveKey) {
-		this.directiveKey = directiveKey;
-	}
+    public void setDirectiveKey(String directiveKey) {
+        this.directiveKey = directiveKey;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

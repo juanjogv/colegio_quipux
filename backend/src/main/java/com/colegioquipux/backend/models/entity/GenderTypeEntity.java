@@ -3,15 +3,15 @@ package com.colegioquipux.backend.models.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "subjects")
-public class SubjectEntity {
+@Table(name = "gender_types")
+public class GenderTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_id", nullable = false)
+    @Column(name = "gender_type_id", nullable = false)
     private Integer id;
 
-    @Column(name = "subject_name", nullable = false, length = 100)
-    private String subjectName;
+    @Column(name = "gender_type_name", length = 100)
+    private String genderTypeName;
 
     @Column(name = "is_active", nullable = false, length = 10)
     private String isActive;
@@ -24,12 +24,12 @@ public class SubjectEntity {
         this.isActive = isActive;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public String getGenderTypeName() {
+        return genderTypeName;
     }
 
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
+    public void setGenderTypeName(String genderTypeName) {
+        this.genderTypeName = genderTypeName;
     }
 
     public Integer getId() {

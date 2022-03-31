@@ -1,7 +1,6 @@
 package com.colegioquipux.backend.controllers.userentry;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +26,7 @@ public class UserEntryController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO) throws Exception {
+	public ResponseEntity<?> signUp(@RequestBody SignUpDTO signUpDTO) {
 		return userService.signUp(signUpDTO);
 	}
 }

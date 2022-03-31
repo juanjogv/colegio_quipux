@@ -6,14 +6,15 @@ import lombok.Data;
 
 @Data
 public class AuthResponseDTO {
+	
+	private String username;
+	private String email;
 	private String token;
-	private String userEmail;
-	private String userNickName;
 	private List<String> userType;
 
-	public AuthResponseDTO(String userNickName, String userEmail, String token, List<String> userType) {
-		this.userNickName = userNickName;
-		this.userEmail = userEmail;
+	public AuthResponseDTO(String username, String email, String token, List<String> userType) {
+		this.username = username;
+		this.email = email;
 		this.token = token;
 		this.userType = userType;
 	}

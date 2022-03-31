@@ -19,38 +19,34 @@ import com.colegioquipux.backend.models.dto.AuthResponseDTO;
 import com.colegioquipux.backend.models.dto.SignInDTO;
 import com.colegioquipux.backend.models.dto.SignUpDTO;
 import com.colegioquipux.backend.models.entity.UserEntity;
-import com.colegioquipux.backend.models.enumtype.YN_ANSWER;
 import com.colegioquipux.backend.models.payload.MessageResponse;
-import com.colegioquipux.backend.repositories.UserRepository;
-import com.colegioquipux.backend.repositories.UsertypeRepository;
 import com.colegioquipux.backend.security.jwt.JwtUtils;
 import com.colegioquipux.backend.security.services.UserDetailsImpl;
+import com.colegioquipux.backend.services.user.UserService;
 import com.colegioquipux.backend.services.userentry.UserEntryService;
+import com.colegioquipux.backend.utils.Constantes.YNAnswer;
 import com.colegioquipux.backend.utils.DateUtils;
 
 @Service
-public class UserServiceImpl implements UserEntryService {
+public class UserEntryServiceImpl implements UserEntryService {
 
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	PasswordEncoder encoder;
+	private PasswordEncoder encoder;
 
 	@Autowired
-	JwtUtils jwtUtils;
+	private JwtUtils jwtUtils;
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	UsertypeRepository usertypeRepository;
+	private UserService userService;
 
 	@Override
 	public ResponseEntity<?> signIn(SignInDTO signInDTO) {
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(signInDTO.getUserNickname(), signInDTO.getUserPassword()));
+				new UsernamePasswordAuthenticationToken(signInDTO.getUsername(), signInDTO.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -58,31 +54,32 @@ public class UserServiceImpl implements UserEntryService {
 		List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
-		return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDTO(userDetails.getUsername(), userDetails.getEmail(), jwt, roles));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new AuthResponseDTO(userDetails.getUsername(), userDetails.getEmail(), jwt, roles));
 	}
 
 	@Override
 	public ResponseEntity<?> signUp(SignUpDTO signUpDTO) {
 
-		if (Boolean.TRUE.equals(userRepository.existsByUserNickname(signUpDTO.getUserNickname()))) {
+		if (Boolean.TRUE.equals(userService.existsUserByUsername(signUpDTO.getUsername()))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new MessageResponse("Error: Este usuario ya esta registrado!"));
 		}
-		if (Boolean.TRUE.equals(userRepository.existsByUserEmail(signUpDTO.getUserEmail()))) {
+		if (Boolean.TRUE.equals(userService.existsUserByEmail(signUpDTO.getEmail()))) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new MessageResponse("Error: Este email ya esta en uso!"));
 		}
 
 		UserEntity user = new UserEntity();
 
-		user.setUserNickname(signUpDTO.getUserNickname());
-		user.setUserEmail(signUpDTO.getUserEmail());
-		user.setUserPassword(encoder.encode(signUpDTO.getUserPassword()));
+		user.setUserUsername(signUpDTO.getUsername());
+		user.setUserEmail(signUpDTO.getEmail());
+		user.setUserPassword(encoder.encode(signUpDTO.getPassword()));
 		user.setUserType(signUpDTO.getUserType());
 		user.setRegisterDate(Timestamp.valueOf(DateUtils.dateTime()));
-		user.setIsActive(YN_ANSWER.Y);
+		user.setIsActive(YNAnswer.Y);
 
-		userRepository.save(user);
+		userService.saveUser(user);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Usuario registrado satisfactoriamente!"));
 	}

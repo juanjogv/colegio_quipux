@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.colegioquipux.backend.models.entity.UserEntity;
-import com.colegioquipux.backend.repositories.UserRepository;
+import com.colegioquipux.backend.services.user.UserService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String userNickname) throws UsernameNotFoundException {
-		UserEntity user = userRepository.findByUserNickname(userNickname)
-				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userNickname));
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserEntity user = userService.findUserByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 		return UserDetailsImpl.build(user);
 	}
 }
